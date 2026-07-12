@@ -12,13 +12,13 @@
     </header>
 
     <div class="converter-nav">
-        <button class="converter-btn">Length</button>
-        <button class="converter-btn">Weight</button>
-        <button class="converter-btn">Temperature</button>
+        <a href="{{ url_for('length') }}" class="converter-btn">Length</a>
+        <a href="{{ url_for('weight') }}" class="converter-btn">Weight</a>
+        <a href="{{ url_for('temperature') }}" class="converter-btn">Temperature</a>
     </div>
 
     <div class="input-group">
-        <label class="input-label">Enter a value</label>
+        <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
         <input class="input-field" type="text">
     </div>
 
