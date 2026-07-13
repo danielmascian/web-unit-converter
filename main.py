@@ -16,14 +16,12 @@ def length():
 
     if request.method == "POST":
         value = float(request.form["value"])
-        session["value"] = value
-        if "value" in session:
-            value = session["value"]
+        session["length_value"] = value
         metric_from = request.form["metric_from"]
         metric_to = request.form["metric_to"]
         result = calculate_length(value, metric_from, metric_to)
         return render_template("length_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "length")
-    return render_template("length.html",value=session.get("value"))
+    return render_template("length.html",value=session.get("length_value"))
 
 @app.route("/weight",methods=["GET","POST"])
 def weight():
@@ -36,9 +34,10 @@ def weight():
         value = float(request.form["value"])
         metric_from = request.form["metric_from"]
         metric_to = request.form["metric_to"]
+        session["weight_value"] = value
         result = calculate_weight(value, metric_from, metric_to)
         return render_template("weight_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "weight")
-    return render_template("weight.html")
+    return render_template("weight.html" , value=session.get("weight_value"))
 
 @app.route("/temperature",methods=["GET","POST"])
 def temperature():
@@ -50,9 +49,10 @@ def temperature():
         value = float(request.form["value"])
         metric_from = request.form["metric_from"]
         metric_to = request.form["metric_to"]
+        session["temperature_value"] = value
         result = calculate_temperature(value, metric_from, metric_to)
         return render_template("temperature_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "temperature")
-    return render_template("temperature.html")
+    return render_template("temperature.html",value=session.get("temperature_value"))
 
 
 def calculate_length(value,metric_from,metric_to):
