@@ -21,17 +21,28 @@
         <form method="POST">
             <div class="input-group">
                 <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
-                <input class="input-field" type="number" step="any" name="value" value="{{ value if value is not none else '' }}">
+                <input class="input-field" type="number" step="any" name="value"
+                    value="{{ value if value is not none else '' }}">
             </div>
 
             <div class="input-group">
                 <label class="input-label">Convert from</label>
-                {%block metric_from%}{%endblock%}
+
+                {% block metric_from %}
+                <select class="input-field" disabled>
+                    <option selected>Select a category first</option>
+                </select>
+                {% endblock %}
             </div>
 
             <div class="input-group">
                 <label class="input-label">Convert to</label>
-                {%block metric_to%}{%endblock%}
+
+                {% block metric_to %}
+                <select class="input-field" disabled>
+                    <option selected>Select a category first</option>
+                </select>
+                {% endblock %}
             </div>
 
             <div class="action">
