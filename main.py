@@ -2,16 +2,23 @@ from flask import Flask,render_template,request,url_for,redirect,session,flash
 
 app = Flask(__name__)
 
-@app.route("/home")
+@app.route("/")
 def home():
     return render_template("index.html")
 
 @app.route("/length",methods=["GET","POST"])
 def length():
+    result = None
+    value = None
+    metric_from = None
+    metric_to = None
+
     if request.method == "POST":
-        value = request.form["value"]
+        value = float(request.form["value"])
         metric_from = request.form["metric_from"]
         metric_to = request.form["metric_to"]
+        result = calculate_length(value, metric_from, metric_to)
+        return render_template("length_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to)
     return render_template("length.html")
 
 @app.route("/weight")
