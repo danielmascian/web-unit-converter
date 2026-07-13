@@ -16,25 +16,27 @@
         <a href="{{ url_for('weight') }}" class="converter-btn">Weight</a>
         <a href="{{ url_for('temperature') }}" class="converter-btn">Temperature</a>
     </div>
+    <form method="POST">
+        <div class="input-group">
+            <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
+            <input class="input-field" type="number" step="any" name="value">
+        </div>
 
-    <div class="input-group">
-        <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
-        <input class="input-field" type="text">
-    </div>
+        <div class="input-group">
+            <label class="input-label">Convert from</label>
+            {%block metric_from%}{%endblock%}
+        </div>
 
-    <div class="input-group">
-        <label class="input-label">Convert from</label>
-        <input class="input-field" type="text">
-    </div>
+        <div class="input-group">
+            <label class="input-label">Convert to</label>
+            {%block metric_to%}{%endblock%}
+        </div>
 
-    <div class="input-group">
-        <label class="input-label">Convert to</label>
-        <input class="input-field" type="text">
-    </div>
+        <div class="action">
+            <button class="convert-btn">Convert</button>
+        </div>
+    </form>
 
-    <div class="action">
-        <button class="convert-btn">Convert</button>
-    </div>
 
 </div>
 
