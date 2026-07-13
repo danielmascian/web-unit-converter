@@ -4,6 +4,12 @@
 <head>
     <title>{%block title%}{%endblock%}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
 </head>
 
 <body>
@@ -29,7 +35,7 @@
                 <label class="input-label">Convert from</label>
 
                 {% block metric_from %}
-                <select class="input-field" disabled>
+                <select class="input-select" disabled>
                     <option selected>Select a category first</option>
                 </select>
                 {% endblock %}
@@ -39,7 +45,7 @@
                 <label class="input-label">Convert to</label>
 
                 {% block metric_to %}
-                <select class="input-field" disabled>
+                <select class="input-select" disabled>
                     <option selected>Select a category first</option>
                 </select>
                 {% endblock %}
