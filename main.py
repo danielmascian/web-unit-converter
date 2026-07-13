@@ -36,8 +36,18 @@ def weight():
         return render_template("weight_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to)
     return render_template("weight.html")
 
-@app.route("/temperature")
+@app.route("/temperature",methods=["GET","POST"])
 def temperature():
+    result = None
+    value = None
+    metric_from = None
+    metric_to = None
+    if request.method == "POST":
+        value = float(request.form["value"])
+        metric_from = request.form["metric_from"]
+        metric_to = request.form["metric_to"]
+        result = calculate_temperature(value, metric_from, metric_to)
+        return render_template("temperature_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to)
     return render_template("temperature.html")
 
 
@@ -63,6 +73,27 @@ def calculate_weight(value,metric_from,metric_to):
     rezult = gram / weight_units[metric_to]
     return rezult
 
+def calculate_temperature(value, metric_from, metric_to):
+    if metric_from == metric_to:
+        return value
+
+    if metric_from == "c":
+        if metric_to == "f":
+            return (value * 9 / 5) + 32
+        elif metric_to == "k":
+            return value + 273.15
+
+    elif metric_from == "f":
+        if metric_to == "c":
+            return (value - 32) * 5 / 9
+        elif metric_to == "k":
+            return (value - 32) * 5 / 9 + 273.15
+
+    elif metric_from == "k":
+        if metric_to == "c":
+            return value - 273.15
+        elif metric_to == "f":
+            return (value - 273.15) * 9 / 5 + 32
 
 if __name__ == "__main__":
     app.run(debug=True)
