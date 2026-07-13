@@ -10,8 +10,8 @@ def home():
 def length():
     if request.method == "POST":
         value = request.form["value"]
-        metric_from = request.form["metric-from"]
-        metric_to = request.form["metric-to"]
+        metric_from = request.form["metric_from"]
+        metric_to = request.form["metric_to"]
     return render_template("length.html")
 
 @app.route("/weight")
@@ -26,10 +26,13 @@ def temperature():
 def calculate_length(value,metric_from,metric_to):
     length_units = {
         "km": 1000,
-        "m" :  1,
+        "m" : 1,
         "cm": 0.01,
         'mm': 0.001
     }
+    meters = value * length_units[metric_from]
+    rezult = meters / length_units[metric_to]
+    return rezult
 
 if __name__ == "__main__":
     app.run(debug=True)
