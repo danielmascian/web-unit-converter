@@ -21,7 +21,7 @@
         <form method="POST">
             <div class="input-group">
                 <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
-                <input class="input-field" type="number" step="any" name="value">
+                <input class="input-field" type="number" step="any" name="value" value="{{ value if value is not none else '' }}">
             </div>
 
             <div class="input-group">
