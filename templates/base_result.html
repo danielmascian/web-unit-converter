@@ -26,6 +26,7 @@
             </div>
 
             <div class="result-card">
+
                 <div class="result-header">
                     <span class="result-title">
                         Result of your calculation
@@ -33,15 +34,16 @@
                 </div>
 
                 <div class="result-value">
-                    <span>{%block result%}{%endblock%}</span>
+                    <span>{% block result %}{% endblock %}</span>
                 </div>
-            </div>
 
-            <form action="{{ url_for(back_page) }}" method="GET">
-                <button type="submit" class="convert-btn">
-                    Reset
-                </button>
-            </form>
+                <form action="{{ url_for(back_page) }}" method="GET">
+                    <button type="submit" class="convert-btn">
+                        Reset
+                    </button>
+                </form>
+
+            </div>
         </div>
 
 
