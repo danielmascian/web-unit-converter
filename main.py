@@ -39,11 +39,11 @@ def weight():
         try:
             value = float(request.form["value"])
             if value < 0:
-                return render_template("weight_value.html",value=value,error="Length cannot be negative.",input_disabled=False,input_min=0)
+                return render_template("weight.html",value=value,error="Length cannot be negative.",input_disabled=False,input_min=0)
             session["weight_value"] = value
             metric_from = request.form["metric_from"]
             metric_to = request.form["metric_to"]
-            result = calculate_length(value, metric_from, metric_to)
+            result = calculate_weight(value, metric_from, metric_to)
             return render_template("weight_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "weight")
         except (ValueError, KeyError):
             return render_template("weight.html",error="Please enter a valid value.",input_disabled=False,input_min=0)
