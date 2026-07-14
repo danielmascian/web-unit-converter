@@ -5,7 +5,7 @@ app.secret_key = "my-key"
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html",value=None,input_disabled=True,input_min=None)
 
 @app.route("/length",methods=["GET","POST"])
 def length():
@@ -15,13 +15,18 @@ def length():
     metric_to = None
 
     if request.method == "POST":
-        value = float(request.form["value"])
-        session["length_value"] = value
-        metric_from = request.form["metric_from"]
-        metric_to = request.form["metric_to"]
-        result = calculate_length(value, metric_from, metric_to)
-        return render_template("length_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "length")
-    return render_template("length.html",value=session.get("length_value"))
+        try:
+            value = float(request.form["value"])
+            if value < 0:
+                return render_template("length.html",value=value,error="Length cannot be negative.",input_disabled=False,input_min=0)
+            session["length_value"] = value
+            metric_from = request.form["metric_from"]
+            metric_to = request.form["metric_to"]
+            result = calculate_length(value, metric_from, metric_to)
+            return render_template("length_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "length")
+        except (ValueError, KeyError):
+            return render_template("length.html",error="Please enter a valid value.",input_disabled=False,input_min=0)
+    return render_template("length.html",value=session.get("length_value"),input_disabled=False,input_min=0)
 
 @app.route("/weight",methods=["GET","POST"])
 def weight():
@@ -31,13 +36,19 @@ def weight():
     metric_to = None
 
     if request.method == "POST":
-        value = float(request.form["value"])
-        metric_from = request.form["metric_from"]
-        metric_to = request.form["metric_to"]
-        session["weight_value"] = value
-        result = calculate_weight(value, metric_from, metric_to)
-        return render_template("weight_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "weight")
-    return render_template("weight.html" , value=session.get("weight_value"))
+        try:
+            value = float(request.form["value"])
+            if value < 0:
+                return render_template("weight_value.html",value=value,error="Length cannot be negative.",input_disabled=False,input_min=0)
+            session["weight_value"] = value
+            metric_from = request.form["metric_from"]
+            metric_to = request.form["metric_to"]
+            result = calculate_length(value, metric_from, metric_to)
+            return render_template("weight_result.html", result = result , value = value , metric_from = metric_from , metric_to = metric_to,back_page = "weight")
+        except (ValueError, KeyError):
+            return render_template("weight.html",error="Please enter a valid value.",input_disabled=False,input_min=0)
+    return render_template("weight.html",value=session.get("weight_value"),input_disabled=False,input_min=0)
+
 
 @app.route("/temperature",methods=["GET","POST"])
 def temperature():
@@ -70,7 +81,7 @@ def calculate_weight(value,metric_from,metric_to):
     weight_units = {
         "kg": 1000,
         "g" : 1,
-        "mg": 0.01,
+        "mg": 0.001,
         "t": 1_000_000
     }
     gram = value * weight_units[metric_from]

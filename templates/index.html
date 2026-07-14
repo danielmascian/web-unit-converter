@@ -28,7 +28,9 @@
             <div class="input-group">
                 <label class="input-label">Enter the {%block value%}{%endblock%} to convert</label>
                 <input class="input-field" type="number" step="any" name="value"
-                    value="{{ value if value is not none else '' }}">
+                    value="{{ value if value is not none else '' }}" {% if input_disabled %} disabled {% endif %} {% if
+                    input_min is not none %} min="{{ input_min }}" {% endif %} {% if not input_disabled %} required {%
+                    endif %}>
             </div>
 
             <div class="input-group">
@@ -52,7 +54,14 @@
             </div>
 
             <div class="action">
-                <button class="convert-btn">Convert</button>
+
+                {% if error %}
+                <p class="error-message">{{ error }}</p>
+                {% endif %}
+
+                <button class="convert-btn" type="submit" {% if input_disabled %}disabled{% endif %}>
+                    Convert
+                </button>
             </div>
         </form>
 
